@@ -8,6 +8,9 @@ import {applyMiddleware, createStore} from 'redux';
 import tasksReducer from './reducers';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
+import logger from './middleware/logger';
+import analytics from './middleware/analytics';
+import apiMiddleware from './middleware/api';
 
 const rootReducer = (state = {}, action) => {
   return {
@@ -17,7 +20,7 @@ const rootReducer = (state = {}, action) => {
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk)),
+  composeWithDevTools(applyMiddleware(thunk, apiMiddleware, logger, analytics)),
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
